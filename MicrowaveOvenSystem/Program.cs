@@ -7,6 +7,7 @@ namespace MicrowaveOvenSystem
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            Console.WriteLine("Test af at gitignore virker.");
         }
     }
 }
