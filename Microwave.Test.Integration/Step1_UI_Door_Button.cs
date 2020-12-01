@@ -31,12 +31,16 @@ namespace Microwave.Test.Integration
 
         }
 
+
+
         [Test]
-        public void Signal_From_Door_Open()
+        public void DoorOpen_ReadyState()
         {
             _door.Close();
             _door.Open();
-            _light.Received(1).TurnOn();
+            _pButton.Press();
+
+            
         }
 
         [Test]
@@ -44,11 +48,8 @@ namespace Microwave.Test.Integration
         {
             _door.Open();
             _door.Close();
-            _light.Received(1).TurnOff();
+            
         }
-
-
-
 
     }
 }
