@@ -63,7 +63,7 @@ namespace Microwave.Test.Integration
         //    }
         [TestCase(1, 1, 0)]
         [TestCase(2, 2, 0)]
-        public void display_time_set(int press, int min, int sec)
+        public void display_ShowTime_state(int press, int min, int sec)
         {
             _pButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
@@ -76,7 +76,9 @@ namespace Microwave.Test.Integration
             _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains($"Display shows: {min:D2}:{sec:D2}")));
         }
         [TestCase("Display shows: 50 W")]
-        public void display_50_watt_use(string a)
+        [TestCase("Display shows: 100 W")]
+        [TestCase("Display shows: 150 W")]
+        public void display_ShowPower_state(string a)
         {
             _pButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
@@ -86,6 +88,15 @@ namespace Microwave.Test.Integration
 
             _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains(a)));
 
+        }
+        [TestCase("Display is cleared")]
+        public void display_Clear_state_door_opended(string a)
+        {
+            _pButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            _door.Opened += Raise.EventWith(this, EventArgs.Empty);
+
+            _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains(a)));
         }
     }
 }
