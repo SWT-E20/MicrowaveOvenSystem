@@ -86,7 +86,7 @@ namespace Microwave.Test.Integration
 
             _scButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
-            _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains(a)));
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains(a)));
 
         }
         [TestCase("Display is cleared")]
