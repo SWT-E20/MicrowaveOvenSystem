@@ -52,11 +52,24 @@ namespace Microwave.Test.Integration
         [Test]
         public void Signal_From_Door_PowerState()
         {
-            _door.Close();
             _pButton.Press();
+            _door.Open();
 
             _display.Received(1).Clear();
             _light.Received(1).TurnOn();
+        }
+
+        [Test]
+        public void Signal_From_Door_CookingState()
+        {
+            _pButton.Press();
+            _tButton.Press();
+            _scButton.Press();
+            
+            _door.Open();
+
+            _display.Received(1).Clear();
+            _cookController.Received(1).Stop();
         }
 
 
@@ -117,6 +130,11 @@ namespace Microwave.Test.Integration
             _light.Received(1).TurnOn();
             _cookController.Received(1).StartCooking(50, 60);
         }
+        //[Test]
+        //public void Cooking_Is_Done_state()
+        //{
+
+        //}
 
 
     }
