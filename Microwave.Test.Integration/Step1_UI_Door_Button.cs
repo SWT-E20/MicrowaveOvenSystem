@@ -31,6 +31,8 @@ namespace Microwave.Test.Integration
 
         }
 
+        /////////////////////////////DOOR tests/////////////////////////////////
+
         [Test]
         public void Signal_From_Door_Open()
         {
@@ -46,6 +48,19 @@ namespace Microwave.Test.Integration
             _door.Close();
             _light.Received(1).TurnOff();
         }
+
+        [Test]
+        public void Signal_From_Door_PowerState()
+        {
+            _door.Close();
+            _pButton.Press();
+
+            _display.Received(1).Clear();
+            _light.Received(1).TurnOn();
+        }
+
+
+        //////////////////////////////button tests////////////////////////////////////////
 
         [TestCase(50, 1, 1)]
         [TestCase(100, 2, 1)]
@@ -80,7 +95,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void CancelButton_Pressed_cookingStopped()
+        public void CancelButton_Pressed_SetPowerState()
         {
             _pButton.Press();
 
@@ -89,6 +104,18 @@ namespace Microwave.Test.Integration
             _display.Received(1).Clear();
             _light.Received(1).TurnOff();
             _cookController.Received(0).Stop();
+        }
+
+        [Test]
+        public void CancelButton_Pressed_SetTimeState()
+        {
+            _pButton.Press();
+            _tButton.Press();
+
+            _scButton.Press();
+
+            _light.Received(1).TurnOn();
+            _cookController.Received(1).StartCooking(50, 60);
         }
 
 
