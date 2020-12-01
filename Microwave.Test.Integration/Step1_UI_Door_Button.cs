@@ -47,14 +47,50 @@ namespace Microwave.Test.Integration
             _light.Received(1).TurnOff();
         }
 
-        [Test]
-        public void PowerButton_Pressed_50W()
+        [TestCase(50, 1, 1)]
+        [TestCase(100, 2, 1)]
+        [TestCase(150, 3, 1)]
+        [TestCase(200, 4, 1)]
+        [TestCase(50, 15, 2)]
+        public void PowerButton_Pressed_specifiedWatt(int power, int loop, int rec)
         {
-            _door.Close();
+            for(int i = 0; i < loop; i++)
+            {
+                _pButton.Press();
+            }
+
+            _display.Received(rec).ShowPower(power);
+        }
+
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+        [TestCase(3, 3)]
+        [TestCase(4, 4)]
+        [TestCase(15, 15)]
+        public void TimeButton_Pressed_specifiedMinute(int minutes, int loop)
+        {
             _pButton.Press();
 
-            _display.Received(1).ShowPower(50);
+            for (int i = 0; i < loop; i++)
+            {
+                _tButton.Press();
+            }
+
+            _display.Received(1).ShowTime(minutes, 0);
         }
+
+        [Test]
+        public void CancelButton_Pressed_cookingStopped()
+        {
+            _pButton.Press();
+
+            _scButton.Press();
+
+            _display.Received(1).Clear();
+            _light.Received(1).TurnOff();
+            _cookController.Received(0).Stop();
+        }
+
 
     }
 }
