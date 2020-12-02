@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microwave.Test.Unit", "Micr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microwave.App", "Microwave.App\Microwave.App.csproj", "{DEA97537-CDF7-4246-AB7A-B6C08D125768}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microwave.Test.Integration", "Microwave.Test.Integration\Microwave.Test.Integration.csproj", "{9A54AD5A-29AB-4994-9E4D-D6747EC5FEC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microwave.Test.Integration", "Microwave.Test.Integration\Microwave.Test.Integration.csproj", "{9A54AD5A-29AB-4994-9E4D-D6747EC5FEC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B7EF36E-330A-4E43-84EB-8410690BFCDF}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Desktop\DiagramStepsSWT.png = ..\..\..\Desktop\DiagramStepsSWT.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
