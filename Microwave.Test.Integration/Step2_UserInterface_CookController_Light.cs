@@ -50,66 +50,52 @@ namespace Microwave.Test.Integration
             _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains($"Light is turned on")));
         }
 
-        //public void DoorOpen_InSetPowerState_CorrectActionsTaken()
-        //{
-        //    _pButton.Press();
-        //    _door.Open();
+        [Test]
+        public void DoorOpen_InSetPowerState_CorrectActionsTaken()
+        {
+            _pButton.Press();
+            _display.Received(1).ShowPower(50);
 
-        //    _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains($"Light is turned on")));
-        //}
+            _door.Open();
 
-        //private IUserInterface _userInterface;
-        //private ILight _light;
-        //private ICookController _cookController;
-        //private IDoor _door;
-        //private IButton _pButton, _tButton, _scButton;
+            _display.Received(1).Clear();
+            _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains($"Light is turned on")));
+        }
 
-        ////Mocks
-        //private IDisplay _display;
-        //private ITimer _timer;
-        //private IPowerTube _powerTube;
-        //private IOutput _output;
+        [Test]
+        public void DoorOpen_InSetTimeState_CorrectActionsTaken()
+        {
+            _pButton.Press();
+            _display.Received(1).ShowPower(50);
 
-        //[SetUp]
-        //public void Setup()
-        //{
-        //    //Set up mocks
-        //    _display = Substitute.For<IDisplay>();
-        //    _timer = Substitute.For<ITimer>();
-        //    _powerTube = Substitute.For<IPowerTube>();
-        //    _output = Substitute.For<IOutput>();
+            _tButton.Press();
+            _display.Received(1).ShowTime(1, 0);
 
-        //    _door = new Door();
-        //    _pButton = new Button();
-        //    _tButton = new Button();
-        //    _scButton = new Button();
+            _door.Open();
 
+            _display.Received(1).Clear();
+            _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains($"Light is turned on")));
+        }
 
-        //    _light = new Light(_output);
-        //    _cookController = new CookController(_timer, _display, _powerTube);
-        //    _userInterface = new UserInterface(_pButton, _tButton, _scButton, _door, _display, _light, _cookController);
-        //}
+        [Test]
+        public void DoorOpen_InCookingState_CorrectActionsTaken()
+        {
+            _pButton.Press();
+            _display.Received(1).ShowPower(50);
 
-        ///* STATES: { READY, SETPOWER, SETTIME, COOKING, DOOROPEN } */
+            _tButton.Press();
+            _display.Received(1).ShowTime(1, 0);
 
+            _scButton.Press();
+            _powerTube.Received(1).TurnOn(50);
+            _timer.Received(1).Start(60);
 
-        //[Test]
-        //public void OnDoorClosed_LightTurnsOn()
-        //{
-        //    _door.Close();
-        //    _userInterface.OnDoorClosed(new object(), new EventArgs());
-        //    _light.Received(1).TurnOff();
-        //}
+            _door.Open();
+            _powerTube.Received(1).TurnOff();
+            _timer.Received(1).Stop();
 
-        //[Test]
-        //public void OnDoorOpen_LightsTurnsOff()
-        //{
-        //    _door.Open();
-        //    _userInterface.OnDoorOpened(new object(), new EventArgs());
-        //    _light.Received(1).TurnOn();
-        //}
-
-
-
+            _display.Received(1).Clear();
+            _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains($"Light is turned on")));
+        }
     }
 }
