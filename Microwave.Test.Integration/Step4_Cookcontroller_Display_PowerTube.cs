@@ -45,7 +45,7 @@ namespace Microwave.Test.Integration
         [TestCase(700, 5)]
         public void StartCooking_CorrectPower(int power, int time)
         {
-            _sbutton.Press();
+            //_sbutton.Press();
             _cookController.StartCooking(power, time);
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains($"{power}")));
         }
