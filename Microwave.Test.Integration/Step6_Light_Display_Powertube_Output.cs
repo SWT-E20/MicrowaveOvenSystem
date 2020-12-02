@@ -133,7 +133,7 @@ namespace Microwave.Test.Integration
             Assert.That(output, Is.EqualTo("PowerTube turned off\r\n"));
         }
 
-        [TestCase(1)]
+        [TestCase(150)]
         [TestCase(50)]
         [TestCase(100)]
         public void PowerTubeTurnOn_PowerTubeIsTurnedOn_OutputsCorrectMessage(int power)
