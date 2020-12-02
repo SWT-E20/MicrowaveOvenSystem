@@ -46,7 +46,7 @@ namespace Microwave.Test.Integration
             _userInterface = new UserInterface(_pButton, _tButton, _scButton, _door, _display, _light, _cookController);
             _cookController = new CookController(_timer, _display, _powerTube, _userInterface);
         }
-        [TestCase(1, 5)]
+
         [TestCase(50, 5)]
         [TestCase(100, 5)]
         [TestCase(350, 5)]
