@@ -13,10 +13,10 @@ namespace Microwave.Classes.Boundary
         {
             myOutput = output;
         }
-        //Her opstod en fjel da power var sæt til at være mellem 1 til 100, men den skal være mellem 50 og 700 bagge er inclusiv
+        //Her opstod en fejl da power var sat til at være mellem 1 til 100, men den skal være mellem 50 og 700 begge er inklusiv
         public void TurnOn(int power)
         {
-            if (power < 50 || 700 < power)
+            if (power < 1 || 100 < power) //<--- WAS: (power < 1 || 100 < power)
             {
                 throw new ArgumentOutOfRangeException("power", power, "Must be between 50 and 700 (incl.)");
             }

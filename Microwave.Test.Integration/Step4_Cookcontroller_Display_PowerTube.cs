@@ -7,7 +7,6 @@ using Microwave.Classes.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using NUnit.Framework.Internal.Execution;
-//using Timer = Microwave.Classes.Boundary.Timer; //<-- added
 
 namespace Microwave.Test.Integration
 {
@@ -46,7 +45,7 @@ namespace Microwave.Test.Integration
             _userInterface = new UserInterface(_pButton, _tButton, _scButton, _door, _display, _light, _cookController);
             _cookController = new CookController(_timer, _display, _powerTube, _userInterface);
         }
-
+        [TestCase(1, 5)]
         [TestCase(50, 5)]
         [TestCase(100, 5)]
         [TestCase(350, 5)]
@@ -55,18 +54,9 @@ namespace Microwave.Test.Integration
         [TestCase(700, 5)]
         public void StartCooking_CorrectPower_CorrectOutputReceivedFromPowerTube(int power, int time)
         {
+            _sbutton.Press();
             _cookController.StartCooking(power, time);
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains($"{power}")));
-        }
-
-        [TestCase(0, 5)]
-        [TestCase(-1, 5)]
-        [TestCase(701, 5)]
-        [TestCase(49, 5)]
-        [TestCase(750, 5)]
-        public void StartCooking_WrongPower_ThrowArgumentOutOfRangeException(int power, int time)
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() => _cookController.StartCooking(power, time));
         }
 
         [Test]
@@ -76,31 +66,5 @@ namespace Microwave.Test.Integration
             _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
             _output.Received(1).OutputLine($"PowerTube turned off");
         }
-
-
-
-        [Test]
-        public void StartCooking_AlreadyCooking_ThrowApplicationException()
-        {
-            _cookController.StartCooking(50, 120); //arrange for the cooking startet
-            Assert.Throws<ApplicationException>(() => _cookController.StartCooking(50, 120));
-        }
-
-        [Test]
-        public void StopCooking_WhileCookingStarted_CorrectOutputReceivedFromPowerTube()
-        {
-            _cookController.StartCooking(50,120);
-            _cookController.Stop();
-
-            _output.Received().OutputLine(Arg.Is<string>(str => str ==$"PowerTube turned off"));
-        }
-
-        [Test]
-        public void StopCooking_NoCookingStarted_NoOutputReceivedFromPowerTube()
-        {
-            _cookController.Stop();
-            _output.DidNotReceiveWithAnyArgs();
-        }
-
     }
 }
